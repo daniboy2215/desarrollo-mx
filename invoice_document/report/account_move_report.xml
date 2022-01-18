@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  © 2022 Fixdoo , (Daniel Diaz <daniel.diaz@fixdoo.mx>)
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <data>
+
+        <record id="action_invoice_document_report_inherit" model="ir.actions.report">
+            <field name="name">Factura Personalizada</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">invoice_document.account_move_report_data_view</field>
+            <field name="report_file">invoice_document.account_move_report</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="account_move_report_data_view">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="header">
+                        <div class="row" style="border-bottom: 3px solid black;">
+                            <!--Logo/Empresa-->
+                            <div class="col-auto col-8" style="line-height: normal !important;">
+                                <b>
+                                    <span t-if="doc.company_id.name" t-field="doc.company_id.name"/>
+                                    <t t-if="doc.company_id.vat">- RNC:</t>
+                                    <span t-field="doc.company_id.vat"/>
+                                </b>
+                                <br/>
+                                <span t-field="doc.company_id.street"
+                                      style="font-size: 11px !important; margin: auto !important; padding-top: 0px !important;"/>
+                                <span t-field="doc.company_id.street2"
+                                      style="font-size: 11px !important; margin: auto !important; padding-top: 0px !important;"/>
+                                <br/>
+                                <span t-field="doc.company_id.city"
+                                      style="font-size: 11px !important; margin: auto !important; padding-top: 0px !important;"/>
+                                <span t-field="doc.company_id.country_id.name"
+                                      style="font-size: 11px !important; margin: auto !important; padding-top: 0px !important;"/>
+                                <br/>
+                                <!--<span t-field="doc.company_id.partner_id" t-field-options='{"widget": "contact", "fields": ["address"], "no_marker": true}'/> -->
+                                <t t-if="doc.company_id.phone">
+                                    <i class="fa fa-phone"/>
+                                    <span t-field="doc.company_id.phone"
+                                          style="font-size: 11px !important; margin: auto !important; padding-top: 0px !important;"/>
+                                </t>
+                                <t t-if="doc.company_id.email">
+                                    <i class="fa fa-envelope"/>
+                                    <span t-field="doc.company_id.email"
+                                          style="font-size: 11px !important; margin: auto !important; padding-top: 0px !important;"/>
+                                </t>
+                                <t t-if="doc.company_id.website">
+                                    <i class="fa fa-globe"/>
+                                    <span t-field="doc.company_id.website"
+                                          style="font-size: 11px !important; margin: auto !important; padding-top: 0px !important;"/>
+                                </t>
+                            </div>
+                            <div class="col-auto col-4 text-right" style="margin-top:0px;">
+                                <img width="90%" style="margin-bottom: 10px;" t-if="doc.company_id.logo"
+                                     t-att-src="'data:image/png;base64,%s' % doc.company_id.logo.decode('ascii')"/>
+                                <br/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page" width="100%" height="100%">
+                        <!--Titulo-->
+                        <div class="row"
+                             style="margin: 0px !important; padding: 0px !important; padding-top: 0px !important;">
+                            <h4 style="text-align: center !important; text-decoration: underline !important;">SOLICITUD
+                                DE ADMISIÓN
+                            </h4>
+                        </div>
+                        <div class="col-12">
+                            <div class="col-8 text-left"
+                                 style="width: 50% !important; float: left !important; text-align: left !important;">
+                                <b>Distrito Cooperativo.</b>
+                                <span t-field="doc.company_id.state_id.name"
+                                      style="text-decoration: underline !important;"/>
+                            </div>
+                            <div class="col-4 text-right"
+                                 style="width: 50% !important; float: right !important; text-align: right !important;">
+                                <b>FECHA:</b>
+                                <span t-field="doc.FechaAdmision" t-options="{'format': 'dd/MM/yyyy'}"/>
+                            </div>
+                        </div>
+                        <!--Compromiso-->
+                        <div class="col-auto col-12" style="text-align: justify !important; padding: 20px 0 10px 0;">
+                            <p>
+                                Por medio de la presente, solicito <strong>libre y voluntariamente</strong> ser admitido
+                                como socio de
+                                LA COOPERATIVA DE AHORROS, CREDITOS Y SERVICIOS MULTIPLES DE LOS EMPLEADOS DEL SECTOR
+                                NAVIERO (COOPSECNA),
+                                bajo el entendido de que, al ser admitido, <strong>me comprometo</strong> a cumplir con
+                                la ley 127/64 y su reglamento,
+                                los ESTATUTOS, NORMATIVAS Y RESOLUCIONES que emanen de la Asamblea General de Delegados
+                                y de los Organismos Directivos, en los cuales estaré
+                                representado por los delegados elegidos e mi Distrito Cooperativo. Estoy consciente de
+                                que el ahorro que realizo nunca será menor a cien pesos (RD$ 100.00) quincenal.
+                                <br/>
+                                <br/>
+                                Por el presente documento y de conformidad con el Decreto 1498, del año 1971, el cual en
+                                su Articulo dos (2)
+                                expresa de manera taxativa: "En consecuencia, toda empresa o entidad pública o privada
+                                estará obligada a deducir y retener
+                                de cualquier cantidad que haya de pagar a sus trabajadores y funcionarios, la suma que
+                                éstos adeuden a la cooperativa, siempre
+                                que tales obreros, empleados y funcionarios sean socios de la cooperativa acreedora y
+                                que la deuda y sus causas consten en pagaré
+                                o cualquier otro documento debidamente firmado por el socio, en el cual autorice al
+                                patrono a hacer dichos descuentos", AUTORIZO
+                                <b t-if="doc.Empresa" t-field="doc.Empresa"
+                                   style="margin: auto !important; text-decoration: underline !important;"/>: A QUE
+                                TRANSFIERA <strong>de mi salario QUINCENAL a
+                                mi cuenta
+                            </strong> de CAPITAL Y AHORROS de COOPSECNA, las cantidades siguientes:
+                                <br/>
+                                a) RD$
+                                <span t-esc="'{0:,.2f}'.format(doc.admision)"
+                                      style="margin: auto !important; text-align: center !important;"/>
+                                (
+                                <span t-field="doc.admision_word"
+                                      style="margin: auto !important; text-align: center !important;"/>
+                                ), <strong>sólo
+                                una vez</strong>, para pagar la cuota de
+                                admisión fijada por el
+                                Consejo de Administración,
+                                <strong>la cual no es reembolsable;</strong>
+                                <br/>
+                                b) RD$
+                                <span t-esc="'{0:,.2f}'.format(doc.certified)"
+                                      style="margin: auto !important; text-align: center !important;"/>
+                                (
+                                <span t-field="doc.certified_word"
+                                      style="margin: auto !important; text-align: center !important;"/>
+                                ), <strong>sólo
+                                una
+                                vez</strong>, para la adquisición de
+                                Certificado (s) de Aportación para ser depositado en mi cuenta de aportación. Esta suma
+                                equivale a 1 aportaciones, ya que cada
+                                aportación tiene un valor de RD$ 150.00.
+                                <br/>
+                                c) RD$
+                                <span t-esc="'{0:,.2f}'.format(doc.contribution_ahorro)"
+                                      style="margin: auto !important; text-align: center !important;"/>
+                                (
+                                <span t-field="doc.contribution_ahorro_word"
+                                      style="margin: auto !important; text-align: center !important;"/>
+                                ) para depositar
+                                en mi
+                                cuenta de ahorros, cada QUINCENA.
+                                <br/>
+                                <br/>
+                                Por concepto del proceso de afiliación (cuota de afiliación + aportaciones + primera
+                                cuota de ahorro), el monto total de la primera
+                                transferencia de (
+                                <span t-field="doc.amount_total_word"
+                                      style="margin: auto !important; text-align: center !important;"/>
+                                ) a LA COOPERATIVA es de RD$
+                                <span t-esc="'{0:,.2f}'.format(doc.amount_total)"
+                                      style="margin: auto !important; text-align: center !important;"/>, (
+                                <span
+                                        t-field="doc.contribution_ahorro_word"
+                                        style="margin: auto !important; text-align: center !important;"/>
+                                ) y en
+                                las subsiguientes nóminas, solo se trasferirá el monto relacionado al ahorro QUINCENAL.
+                                <br/>
+                                <br/>
+                                Igualmente, quiero señalar que estoy consciente de que los RD$
+                                <span t-esc="'{0:,.2f}'.format(doc.certified)"
+                                      style="margin: auto !important; text-align: center !important;"/>
+                                que autorizo
+                                de manera libre y voluntaria a depositar en mi
+                                cuenta de aportación son para formar el capital de COOPSECNA, los cuales podrán ser
+                                retirados, únicamente al momento de retirarme definitivamente
+                                de la Cooperativa, sea por la terminación de mi contrato de trabajo con la empresa o por
+                                cualquier otra razón. Estoy consciente de que tengo la obligación
+                                de pagar por lo menos un certificado de aportación y la libertad de comprar un número
+                                ilimitado de certificados de aportación. Entiendo y estoy de acuerdo
+                                que el hecho de hacerme socio de la Cooperativa no es garantía de continuidad de mi
+                                contrato de trabajo o de mi salario por un periodo de tiempo, en el entendido de que
+                                mi contrato de trabajo puede ser terminado, como dice la ley laboral dominicana, en
+                                cualquier momento y sin causa definida por
+                                <b t-field="doc.Empresa"
+                                   style="margin: auto !important; text-decoration: underline !important;"/>
+                                .
+                                <br/>
+                                <br/>
+                                Asimismo, autorizo a
+                                <b t-field="doc.Empresa"
+                                   style="margin: auto !important; text-decoration: underline !important;"/>
+                                a proveer informaciones
+                                personales relativas a tiempo de labor en la empresa, posicion desempeñada,
+                                salario percibido, dirección personal, teléfono personal, nómero de cuenta bancaria, y
+                                cualquier otra información de indole laboral que sea requerida por COOPSECNA.
+                                <div style="padding-top: 200px !important;"/>
+
+                                <table class="row col-auto col-12 table table-condensed"
+                                       style="width: 100% !important; margin: 0px !important; padding: 0px !important; border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                    <caption
+                                            style="text-align: center !important; font-weight: bold !important; background: lightgray !important;">
+                                        DATOS
+                                        GENERALES DEL SOCIO
+                                    </caption>
+                                    <tr class="row col-auto col-12"
+                                        style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                        <td colspan="6">
+                                            <b>Empresa:</b>
+                                            <div>
+                                                <span t-field="doc.Empresa"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                        <td colspan="6"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Codigo Empleado:</b>
+                                            <div>
+                                                <span t-field="doc.CodigoEmpleado"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Nombre y Apellido</b>
+                                            <div>
+                                                <span t-field="doc.DatosSolicitanteNombre"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                                <span t-field="doc.DatosSolicitanteApellido"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                        <td colspan="4"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Código</b>
+                                            <div>
+                                                <span t-field="doc.name"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                        <td colspan="4"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Sexo</b>
+                                            <div>
+                                                <span t-if="doc.Sexo == 'mas'"
+                                                      style="margin: auto !important; text-decoration: underline !important; text-align: center !important;">
+                                                    Masculino
+                                                </span>
+                                                <span t-if="doc.Sexo == 'fem'"
+                                                      style="margin: auto !important; text-decoration: underline !important; text-align: center !important;">
+                                                    Femenino
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Cédula de Identidad</b>
+                                            <div>
+                                                <span t-field="doc.Cedula"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                        <td colspan="3"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Fecha de Nacimiento</b>
+                                            <div>
+                                                <span t-field="doc.FechaNacimiento"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                                Edad
+                                                <span t-field="doc.edad"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                        <td colspan="3"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Fecha de Ingreso</b>
+                                            <div>
+                                                <span t-field="doc.FechaIngreso"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                                Duración
+                                                <span t-field="doc.Duracion"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                        <td colspan="3"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Posición</b>
+                                            <div>
+                                                <span t-field="doc.Posicion.name"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Dirección</b>
+                                            <div>
+                                                <span t-field="doc.Sector.name"
+                                                      style="margin: auto !important; text-align: center !important;"/>,
+                                                <span t-field="doc.Direccion"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                                <span t-field="doc.Direccion2"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                        <td colspan="6"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Teléfonos</b>
+                                            <div>
+                                                <span t-field="doc.Celular"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                                Tel.
+                                                <span t-field="doc.Telefono"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                                Tel. Fam.
+                                                <span t-field="doc.TelefonoFamilia"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Salario Mensual RD$</b>
+                                            <div>
+                                                <span t-field="doc.SalarioMensual"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                        <td colspan="4"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Frecuencia de Pago</b>
+                                            <div>
+                                                <span t-field="doc.FrecuenciaPago"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                        <td colspan="4"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Banco</b>
+                                            <div>
+                                                <span t-field="doc.Banco"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="6"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Número de Cuenta</b>
+                                            <div>
+                                                <span t-field="doc.NumeroBanco"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                        <td colspan="6"
+                                            style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                            <b>Tipo de Cuenta</b>
+                                            <div>
+                                                <span t-field="doc.TipoCuenta"
+                                                      style="margin: auto !important; text-align: center !important;"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p>
+                            <!--Firmantes-->
+                            <div class="col-auto col-12" style="padding: 90px 0 10px 0;">
+                                <div class="col-4"
+                                     style="padding-left: 5% !important; width: 30% !important; display: inline-block !important; text-align: center !important;">
+                                    <div style="border-top: 1px solid #999; margin-bottom: 6px;"/>
+                                    <p>Firma Solicitante</p>
+                                </div>
+                                <div class="col-4"
+                                     style="padding-left: 5% !important; width: 30% !important; display: inline-block !important; text-align: center !important;">
+                                    <div style="border-top: 1px solid #999; margin-bottom: 6px;"/>
+                                    <p>Aprobado</p>
+                                </div>
+                                <div class="col-4-right"
+                                     style="width: 20% !important; display: inline-block !important; text-align: right !important;">
+                                    <small>
+                                        <strong>Original Empresa
+                                            <br/>
+                                            Copia Solicitante
+                                        </strong>
+                                    </small>
+                                </div>
+                            </div>
+
+                            <!--Tabla de Firmantes Digitales Aprobatorios-->
+                            <table class="row col-auto col-12 table table-condensed"
+                                   style="width: 100% !important; margin: 0px !important; padding: 0px !important; border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                <caption
+                                        style="text-align: center !important; font-weight: bold !important; background: lightgray !important;">
+                                    PARA USO INTERNO DE LA COOPERATIVA
+                                </caption>
+                                <tr>
+                                    <td colspan="6"
+                                        style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                        <b>PROCESADO POR:</b>
+                                        <!--<span t-field="doc.DatosSolicitanteNombre"
+                                              style="margin: auto !important; text-align: center !important;"/>-->
+                                    </td>
+                                    <td colspan="6"
+                                        style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                        <b>EN FECHA:</b>
+                                        <span t-field="doc.FechaAdmision"
+                                              style="margin: auto !important; text-align: center !important;"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6"
+                                        style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                        <b>AUTORIZADO POR:</b>
+                                        <!--<span t-field="doc.DatosSolicitanteNombre"
+                                              style="margin: auto !important; text-align: center !important;"/>-->
+                                    </td>
+                                    <td colspan="6"
+                                        style="border: 2px solid lightgray !important; border-collapse: collapse !important;">
+                                        <b>EN FECHA:</b>
+                                        <span t-field="doc.FechaAprobacion"
+                                              style="margin: auto !important; text-align: center !important;"/>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="footer" style="line-height: 150% !important; padding-top: 3px !important;">
+                        <div class="text-center" style="border-top: 1px solid black;">
+                            <ul class="list-inline mb4"
+                                style="text-align: center !important; display: inline-block !important;">
+                                <li style="display: inline-block !important; float: left !important; padding-left: 20px !important;"
+                                    t-if="doc.company_id.phone">
+                                    <i class="fa fa-phone"/>
+                                    Tel:
+                                    <span t-field="doc.company_id.phone"/>
+                                </li>
+                                <li style="display: inline-block !important; float: left !important; padding-left: 20px !important;"
+                                    t-if="doc.company_id.email">
+                                    <i class="fa fa-envelope"/>
+                                    Email:
+                                    <span t-field="doc.company_id.email"/>
+                                </li>
+                                <li style="display: inline-block !important; float: left !important; padding-left: 20px !important;"
+                                    t-if="doc.company_id.website">
+                                    <i class="fa fa-globe"/>
+                                    Web:
+                                    <span t-field="doc.company_id.website"/>
+                                </li>
+                                <li style="display: inline-block !important; float: left !important; padding-left: 20px !important;"
+                                    t-if="doc.company_id.vat">RNC:
+                                    <span t-field="doc.company_id.vat"/>
+                                </li>
+                            </ul>
+
+                            <div class="text-center text-muted">
+                                Pagina:
+                                <span class="page"/>
+                                /
+                                <span class="topage"/>
+                                -
+                                <span class="text-right"
+                                      t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M')"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+
+    </data>
+</odoo>
