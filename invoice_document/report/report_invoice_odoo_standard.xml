@@ -10,13 +10,13 @@
             <xpath expr="//div[hasclass('page')]" position="replace">
                 <t t-call="web.html_container">
                     <t t-foreach="docs" t-as="doc">
-                        <div class="header">
+                        <!--<div class="header">
                             <h3>HOLA MUNDO</h3>
-                        </div>
+                        </div>-->
                         <div class="page" width="100%" height="100%">
                             <h5>HOLA MUNDO</h5>
                         </div>
-                        <div class="footer" style="line-height: 150% !important; padding-top: 3px !important;">
+                        <!--<div class="footer" style="line-height: 150% !important; padding-top: 3px !important;">
                         <div class="text-center" style="border-top: 1px solid black;">
                             <ul class="list-inline mb4"
                                 style="text-align: center !important; display: inline-block !important;">
@@ -54,7 +54,7 @@
                                       t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M')"/>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     </t>
                 </t>
             </xpath>
@@ -64,13 +64,13 @@
             <xpath expr="//div[hasclass('page')]" position="replace">
                 <t t-call="web.html_container">
                     <t t-foreach="docs" t-as="doc">
-                        <div class="header">
+                        <!--<div class="header">
                             <h3>HOLA MUNDO</h3>
-                        </div>
+                        </div>-->
                         <div class="page" width="100%" height="100%">
                             <h5>HOLA MUNDO</h5>
                         </div>
-                        <div class="footer" style="line-height: 150% !important; padding-top: 3px !important;">
+                        <!--<div class="footer" style="line-height: 150% !important; padding-top: 3px !important;">
                         <div class="text-center" style="border-top: 1px solid black;">
                             <ul class="list-inline mb4"
                                 style="text-align: center !important; display: inline-block !important;">
@@ -108,7 +108,7 @@
                                       t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M')"/>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     </t>
                 </t>
             </xpath>
