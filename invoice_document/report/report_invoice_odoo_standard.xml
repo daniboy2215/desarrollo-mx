@@ -7,34 +7,29 @@
     <data>
 
         <template id="odoo_std_report_invoice_document" inherit_id="account.report_invoice_document" primary="True">
-            <t t-if="o and 'company_id' in o">
-                <t t-set="company" t-value="o.company_id"></t>
-            </t>
-            <t t-if="not o or not 'company_id' in o">
-                <t t-set="company" t-value="res_company"></t>
-            </t>
-            <div class="header">
-                    <div class="row mt32 mb32">
-                        <div class="col-6">
-                            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="max-height: 50px;" />
-                        </div>
-                        <div class="col-6 text-right" style="font:12px lucida-console,sans-serif !important;">
-                            <span t-field="company.partner_id" />
-                            <br/>
-                            <span t-field="company.partner_id.street" />
-                            <br/>
-                            <span t-field="company.partner_id.street2" />
-                            <br/>
-                            <span t-field="company.partner_id.city" />
-                            <br/>
-                            <span t-field="company.partner_id.country_id" />
-                            <br/>
-                            <span t-field="company.partner_id.vat" />
-                            <br/>
+            <xpath expr="//div[@class='page']" position="replace">
+                <div class="header">
+                        <div class="row mt32 mb32">
+                            <div class="col-6">
+                                <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % to_text(company.logo)" style="max-height: 50px;" />
+                            </div>
+                            <div class="col-6 text-right" style="font:12px lucida-console,sans-serif !important;">
+                                <span t-field="company.partner_id" />
+                                <br/>
+                                <span t-field="company.partner_id.street" />
+                                <br/>
+                                <span t-field="company.partner_id.street2" />
+                                <br/>
+                                <span t-field="company.partner_id.city" />
+                                <br/>
+                                <span t-field="company.partner_id.country_id" />
+                                <br/>
+                                <span t-field="company.partner_id.vat" />
+                                <br/>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <t t-call="web.external_layout">
+                <t t-call="web.external_layout">
                 <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
                 <div class="page">
                     <div class="row" style="padding-top:20px;">
@@ -177,6 +172,7 @@
 
                     </div>
             </t>
+            </xpath>
         </template>
 
 
