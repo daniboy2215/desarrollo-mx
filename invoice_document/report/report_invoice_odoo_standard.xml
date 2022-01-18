@@ -7,7 +7,7 @@
     <data>
 
         <template id="odoo_std_report_invoice_document" inherit_id="account.report_invoice_document" primary="True">
-            <xpath expr="//div[@class='page']" position="replace">
+            <xpath expr="//div[hasclass('page')]" position="replace">
                 <div class="header">
                         <div class="row mt32 mb32">
                             <div class="col-6">
@@ -214,7 +214,7 @@
             </xpath>
         </template>
 
-        <template id="report_invoice_with_payments">
+        <!--<template id="report_invoice_with_payments">
             <xpath expr='//t[@t-call="account.report_invoice_document"]' position="replace">
                 <t t-if="o._get_name_invoice_report() == 'invoice_document.odoo_std_report_invoice_document'"
                     t-call="invoice_document.odoo_std_report_invoice_document" t-lang="lang"/>
@@ -226,7 +226,7 @@
                 <t t-if="o._get_name_invoice_report() == 'invoice_document.odoo_std_report_invoice_document'"
                    t-call="invoice_document.odoo_std_report_invoice_document" t-lang="lang"/>
             </xpath>
-        </template>
+        </template>-->
 
 
     </data>
