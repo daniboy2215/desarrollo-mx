@@ -28,7 +28,7 @@
     # always loaded
     "data": [
         # "views/account_move_report_data_view.xml",
-        # "views/res_company_view.xml",
+        "views/res_company_view.xml",
     ],
     # only loaded in demonstration mode
     "demo": [
