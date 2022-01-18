@@ -6,7 +6,7 @@
 <odoo>
     <data>
 
-        <template id="odoo_std_report_invoice_document" inherit_id="account.report_invoice_document" priority="True">
+        <template id="odoo_std_report_invoice_document" inherit_id="account.report_invoice_document" primary="True">
             <t t-if="o and 'company_id' in o">
                 <t t-set="company" t-value="o.company_id"></t>
             </t>
