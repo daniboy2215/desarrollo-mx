@@ -172,6 +172,59 @@
 
                     </div>
             </t>
+                <div class="footer" style="line-height: 150% !important; padding-top: 3px !important;">
+                        <div class="text-center" style="border-top: 1px solid black;">
+                            <ul class="list-inline mb4"
+                                style="text-align: center !important; display: inline-block !important;">
+                                <li style="display: inline-block !important; float: left !important; padding-left: 20px !important;"
+                                    t-if="doc.company_id.phone">
+                                    <i class="fa fa-phone"/>
+                                    Tel:
+                                    <span t-field="doc.company_id.phone"/>
+                                </li>
+                                <li style="display: inline-block !important; float: left !important; padding-left: 20px !important;"
+                                    t-if="doc.company_id.email">
+                                    <i class="fa fa-envelope"/>
+                                    Email:
+                                    <span t-field="doc.company_id.email"/>
+                                </li>
+                                <li style="display: inline-block !important; float: left !important; padding-left: 20px !important;"
+                                    t-if="doc.company_id.website">
+                                    <i class="fa fa-globe"/>
+                                    Web:
+                                    <span t-field="doc.company_id.website"/>
+                                </li>
+                                <li style="display: inline-block !important; float: left !important; padding-left: 20px !important;"
+                                    t-if="doc.company_id.vat">RNC:
+                                    <span t-field="doc.company_id.vat"/>
+                                </li>
+                            </ul>
+
+                            <div class="text-center text-muted">
+                                Pagina:
+                                <span class="page"/>
+                                /
+                                <span class="topage"/>
+                                -
+                                <span class="text-right"
+                                      t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y %H:%M')"/>
+                            </div>
+                        </div>
+                    </div>
+            </xpath>
+        </template>
+
+        <template id="report_invoice_with_payments">
+            <xpath expr='//t[@t-call="account.report_invoice_document"]' position="replace">
+                <t t-if="o._get_name_invoice_report() == 'invoice_document.odoo_std_report_invoice_document'"
+                    t-call="invoice_document.odoo_std_report_invoice_document" t-lang="lang"/>
+            </xpath>
+        </template>
+
+        <template id="report_invoice" inherit_id="account.report_invoice">
+            <xpath expr='//t[@t-call="account.report_invoice_document"]' position="replace">
+                <t t-if="o._get_name_invoice_report() == 'invoice_document.odoo_std_report_invoice_document'"
+                   t-call="invoice_document.odoo_std_report_invoice_document" t-lang="lang"/>
             </xpath>
         </template>
 
