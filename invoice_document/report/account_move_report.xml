@@ -16,7 +16,7 @@
             <field name="binding_type">report</field>
         </record>
 
-        <template id="account_move_report_data_view">
+        <template id="account_move_report_data_view" inherit_id="account.report_invoice_document" primary="True">
             <t t-call="web.html_container">
                 <t t-foreach="docs" t-as="doc">
                     <div class="header">
@@ -471,6 +471,20 @@
                     </div>
                 </t>
             </t>
+        </template>
+
+        <template id="report_invoice" inherit_id="account.report_invoice">
+            <xpath expr='//t[@t-call="account.report_invoice_document"]' position="after">
+                <t t-if="o._get_name_invoice_report() == 'invoice_document.account_move_report_data_view'"
+                   t-call="invoice_document.account_move_report_data_view" t-lang="lang"/>
+            </xpath>
+        </template>
+
+        <template id="report_invoice_with_payments" inherit_id="account.report_invoice_with_payments">
+            <xpath expr='//t[@t-call="account.report_invoice_document"]' position="after">
+                <t t-if="o._get_name_invoice_report() == 'invoice_document.account_move_report_data_view'"
+                   t-call="invoice_document.account_move_report_data_view" t-lang="lang"/>
+            </xpath>
         </template>
 
 
