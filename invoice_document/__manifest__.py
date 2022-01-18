@@ -28,6 +28,7 @@
     # always loaded
     "data": [
         # "views/account_move_report_data_view.xml",
+        "report/report_invoice_odoo_standard.xml",
         "views/res_company_view.xml",
     ],
     # only loaded in demonstration mode
